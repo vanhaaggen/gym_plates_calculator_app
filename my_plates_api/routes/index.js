@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const bodyParser = require('body-parser')
 
-const calculatePlates = require('../logic/calculate-plates')
+const calculatePlates = require('./calc-num-plates')
 
 const router = Router()
 const jsonBodyParser = bodyParser.json()
