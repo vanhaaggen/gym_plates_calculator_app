@@ -11,7 +11,7 @@ const validate = {
     }
 }
 
-function calcWeights(desiredWeight, barWeight, weightsAvail) {
+function calcWeights(desiredWeight, barWeight, weightsAvail, units) {
     validate.number(desiredWeight, 'desiredWeight')
     validate.number(barWeight, 'barWeight')
     validate.array(weightsAvail, 'weightsAvail')
@@ -19,10 +19,11 @@ function calcWeights(desiredWeight, barWeight, weightsAvail) {
     let data = {
         'dweight': desiredWeight,
         'bweight': barWeight,
-        'wavail': weightsAvail
+        'wavail': weightsAvail,
+        'units': units
     }
     let xurldata = querystring.stringify({ 'data': JSON.stringify(data) })
-
+    console.log('calcWeights: ', { units, xurldata })
     return (async () => {
         const response = await fetch(`${URL}/calcnumplate/${xurldata}`, {
             method: 'GET',
@@ -34,6 +35,7 @@ function calcWeights(desiredWeight, barWeight, weightsAvail) {
             const { error } = await response.json()
             throw Error(error)
         }
+
 
         return response.json()
 

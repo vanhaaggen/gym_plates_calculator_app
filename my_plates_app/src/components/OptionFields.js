@@ -1,28 +1,47 @@
-import React, { useState } from 'react'
+import React, { useState, useReducer } from 'react'
 import getAvailPlates from '../logic/getAvailPlates'
 import calcWeights from '../logic/calcWeights'
 
-export default function () {
-    const weights = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1.25, 1]
+const kilos = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1.25, 1]
+const pounds = [100, 55, 45, 35, 25, 10, 5, 2.5, 1.25]
 
-    const handleCalcWeights = async (desiredWeight, barWeight, weightsAvail) => {
+export default function () {
+    const [massUnit, setMassUnit] = useState(kilos)
+
+    function MassUnitButton() {
+        return (
+            <>
+                <button onClick={() => setMassUnit(kilos)}>Kilos</button>
+                <button onClick={() => setMassUnit(pounds)}>Pounds</button>
+            </>
+        )
+    }
+
+    const unit = massUnit[0] === 25 ? 'kilos' : 'pounds'
+    console.log('optionfields: ', unit)
+
+    const handleCalcWeights = async (desiredWeight, barWeight, weightsAvail, unit) => {
         try {
-            const weightsToRack = await calcWeights(desiredWeight, barWeight, weightsAvail)
-            console.log('Response arrived: ', weightsToRack)
+            const weightsToRack = await calcWeights(desiredWeight, barWeight, weightsAvail, unit)
+
+            console.log('Response arrived: ', weightsToRack.result)
         } catch ({ message }) {
             console.log(message)
-
         }
     }
+
+
     return (
         <div className="container">
+            <MassUnitButton />
+            <p>{unit}</p>
             <form className="form" onSubmit={event => {
                 event.preventDefault()
 
                 const { target: { targetWeight: { value: targetWeight }, barWeight: { value: barWeight }, weight } } = event
                 const availPlates = getAvailPlates(weight)
 
-                handleCalcWeights(Number(targetWeight), Number(barWeight), availPlates)
+                handleCalcWeights(Number(targetWeight), Number(barWeight), availPlates, unit)
             }
             }>
                 <div className="">
@@ -40,7 +59,7 @@ export default function () {
                 </div>
                 <h3>Available Plates</h3>
                 <div className="">
-                    {weights.map((weight, index) => {
+                    {massUnit.map((weight, index) => {
                         return <>
                             <div className="" key={`w-${index}`}>
                                 <label className="" htmlFor={`weight${weight}`}>{weight}</label>

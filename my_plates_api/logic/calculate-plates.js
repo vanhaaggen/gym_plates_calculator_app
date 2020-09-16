@@ -11,13 +11,16 @@ const validate = {
     }
 }
 
+const kilos = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1.25, 1]
+const pounds = [100, 55, 45, 35, 25, 10, 5, 2.5, 1.25]
 //Convierte este en una Pomise que devuelva un objeto.
-async function calcPlates(desiredWeight, barWeight, weightsAvail) {
+function calcPlates(desiredWeight, barWeight, weightsAvail, units) {
     validate.number(desiredWeight, 'desiredWeight')
     validate.number(barWeight, 'barWeight')
     validate.array(weightsAvail, 'weightsAvail')
 
-    const weights = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1.25, 1]
+    console.log('calculate-plates: ', units)
+    let weights = units === 'kilos' ? kilos : pounds
     let platesToRack = setRack(weights)
     let platesAvailable = addAvailablePlates(weights, weightsAvail)
     let amountLeft = desiredWeight - barWeight
@@ -26,6 +29,7 @@ async function calcPlates(desiredWeight, barWeight, weightsAvail) {
         let found = false
         for (let [weight, numPlates] of platesAvailable) {
             let amount = weight * 2
+
             if (numPlates > 0 && amount <= amountLeft) {
                 amountLeft -= amount
                 platesAvailable.set(weight, numPlates - 2)
@@ -45,13 +49,13 @@ async function calcPlates(desiredWeight, barWeight, weightsAvail) {
 
 }
 
-module.exports = function (desiredWeight, barWeight, weightsAvail) {
+module.exports = function (desiredWeight, barWeight, weightsAvail, units) {
     return (async () => {
 
         const obj = {}
-        const mapToObj = (value, key, map) => obj[key] = value
+        const mapToObj = (value, key, map) => obj[`w${key}`] = value
 
-        const result = await calcPlates(desiredWeight, barWeight, weightsAvail)
+        const result = await calcPlates(desiredWeight, barWeight, weightsAvail, units)
         result.forEach(mapToObj)
         return obj
     })()

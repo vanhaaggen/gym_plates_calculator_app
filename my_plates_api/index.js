@@ -1,33 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const cors = require('cors')
-const bodyParser = require('body-parser')
-const jsonBodyParser = bodyParser.json()
+//const bodyParser = require('body-parser')
+//const jsonBodyParser = bodyParser.json()
 const { name, version } = require('./package')
-const calculatePlates = require('./logic/calculate-plates')
-const querystring = require('querystring')
+const calculatePlates = require('./routes/calc-num-plates')
 
 
-router.get('/calcnumplate/:data', [jsonBodyParser], async function (req, res) {
-
-    let data = querystring.parse(req.params.data)
-    let json2data = JSON.parse(data.data)
-    const { dweight, bweight, wavail } = json2data
-
-    if (isNaN(dweight) || isNaN(bweight)) {
-        res.status(400)
-        res.json({ error: "Bad request" })
-    }
-
-    try {
-        await calculatePlates(dweight, bweight, wavail)
-            .then(result => res.status(201).json({ message: 'plates correctly calculated', result }))
-            .catch(({ message }) => res.status(400).json({ error: message }))
-    } catch ({ message }) {
-        res.status(400).json({ error: message })
-    }
-
-})
+router.get('/calcnumplate/:data', calculatePlates)
 
 
 const app = express()
