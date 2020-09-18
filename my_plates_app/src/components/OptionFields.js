@@ -4,9 +4,14 @@ import calcWeights from '../logic/calcWeights'
 
 const kilos = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1.25, 1]
 const pounds = [100, 55, 45, 35, 25, 10, 5, 2.5, 1.25]
+const barKilos = [15, 20]
+const barPounds = [33, 44]
 
 export default function () {
     const [massUnit, setMassUnit] = useState(kilos)
+
+    let unit = massUnit[0] === 25 ? 'kilos' : 'pounds'
+    let barWeight = unit === 'kilos' ? barKilos : barPounds
 
     function MassUnitButton() {
         return (
@@ -17,7 +22,7 @@ export default function () {
         )
     }
 
-    const unit = massUnit[0] === 25 ? 'kilos' : 'pounds'
+
     console.log('optionfields: ', unit)
 
     const handleCalcWeights = async (desiredWeight, barWeight, weightsAvail, unit) => {
@@ -52,8 +57,8 @@ export default function () {
                     <div className="l">
                         <label htmlFor="barWeight">Bar Weight</label>
                         <select name="barWeight" id="barWeight">
-                            <option value="15">15</option>
-                            <option value="20">20</option>
+                            <option value={`"${barWeight[0]}"`}>{barWeight[0]}</option>
+                            <option value={`"${barWeight[1]}"`}>{barWeight[1]}</option>
                         </select>
                     </div>
                 </div>
