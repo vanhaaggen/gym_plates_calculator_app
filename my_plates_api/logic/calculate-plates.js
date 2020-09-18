@@ -52,12 +52,12 @@ function calcPlates(desiredWeight, barWeight, weightsAvail, units) {
 module.exports = function (desiredWeight, barWeight, weightsAvail, units) {
     return (async () => {
 
-        const obj = {}
-        const mapToObj = (value, key, map) => obj[`w${key}`] = value
+        const arr = []
+        const mapToArr = (value, key, map) => arr[arr.length] = [key, value]
 
         const result = await calcPlates(desiredWeight, barWeight, weightsAvail, units)
-        result.forEach(mapToObj)
-        return obj
+        result.forEach(mapToArr)
+        return arr
     })()
 }
 

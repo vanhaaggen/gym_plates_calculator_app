@@ -1,6 +1,7 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState } from 'react'
 import getAvailPlates from '../logic/getAvailPlates'
 import calcWeights from '../logic/calcWeights'
+import BarWeightInput from './BarWeightInput'
 
 const kilos = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1.25, 1]
 const pounds = [100, 55, 45, 35, 25, 10, 5, 2.5, 1.25]
@@ -9,6 +10,7 @@ const barPounds = [33, 44]
 
 export default function () {
     const [massUnit, setMassUnit] = useState(kilos)
+    const [data, setData] = useState()
 
     let unit = massUnit[0] === 25 ? 'kilos' : 'pounds'
     let barWeight = unit === 'kilos' ? barKilos : barPounds
@@ -22,18 +24,16 @@ export default function () {
         )
     }
 
-
-    console.log('optionfields: ', unit)
-
     const handleCalcWeights = async (desiredWeight, barWeight, weightsAvail, unit) => {
         try {
             const weightsToRack = await calcWeights(desiredWeight, barWeight, weightsAvail, unit)
-
+            setData(weightsToRack.result)
             console.log('Response arrived: ', weightsToRack.result)
         } catch ({ message }) {
             console.log(message)
         }
     }
+
 
 
     return (
@@ -46,22 +46,10 @@ export default function () {
                 const { target: { targetWeight: { value: targetWeight }, barWeight: { value: barWeight }, weight } } = event
                 const availPlates = getAvailPlates(weight)
 
-                handleCalcWeights(Number(targetWeight), Number(barWeight), availPlates, unit)
+                handleCalcWeights(parseInt(targetWeight), parseInt(barWeight), availPlates, unit)
             }
             }>
-                <div className="">
-                    <div className="">
-                        <label htmlFor="targetWeight">Target Weight</label>
-                        <input type="number" name="targetWeight" id="targetWeight" />
-                    </div>
-                    <div className="l">
-                        <label htmlFor="barWeight">Bar Weight</label>
-                        <select name="barWeight" id="barWeight">
-                            <option value={`"${barWeight[0]}"`}>{barWeight[0]}</option>
-                            <option value={`"${barWeight[1]}"`}>{barWeight[1]}</option>
-                        </select>
-                    </div>
-                </div>
+                <BarWeightInput bWeight={barWeight} />
                 <h3>Available Plates</h3>
                 <div className="">
                     {massUnit.map((weight, index) => {
@@ -75,10 +63,12 @@ export default function () {
                 </div>
                 <button className="bttn">Calculate</button>
             </form>
+            {data && <>
+                <div className="data-container">{data}</div>
+            </>}
         </div>
+
     )
 
-    function newFunction() {
-        debugger
-    }
+
 }
