@@ -34,7 +34,13 @@ export default function () {
         }
     }
 
-
+    const inputWeightAmount = (amount) => {
+        let arr = []
+        for (let i = 0; i <= amount; i++) {
+            arr.push(<option value={i}>{i}</option>)
+        }
+        return arr
+    }
 
     return (
         <div className="container">
@@ -45,7 +51,7 @@ export default function () {
 
                 const { target: { targetWeight: { value: targetWeight }, barWeight: { value: barWeight }, weight } } = event
                 const availPlates = getAvailPlates(weight)
-
+                console.log(availPlates)
                 handleCalcWeights(parseInt(targetWeight), parseInt(barWeight), availPlates, unit)
             }
             }>
@@ -56,7 +62,9 @@ export default function () {
                         return <>
                             <div className="" key={`w-${index}`}>
                                 <label className="" htmlFor={`weight${weight}`}>{weight}</label>
-                                <input type="number" name="weight" min="0" max="12" defaultValue="0" />
+                                <select name="weight" id="weight">
+                                    {inputWeightAmount(20)}
+                                </select>
                             </div>
                         </>
                     })}
