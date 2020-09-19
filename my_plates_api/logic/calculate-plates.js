@@ -1,5 +1,5 @@
-const setRack = require('../logic/setRack')
-const addAvailablePlates = require('../logic/addAvailablePlates')
+const helper = require('../helpers')
+const { setRack, addAvailablePlates, filterArr, hasEnoughPlates } = helper
 
 const validate = {
     number(target, name) {
@@ -13,7 +13,8 @@ const validate = {
 
 const kilos = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1.25, 1]
 const pounds = [100, 55, 45, 35, 25, 10, 5, 2.5, 1.25]
-//Convierte este en una Pomise que devuelva un objeto.
+
+
 function calcPlates(desiredWeight, barWeight, weightsAvail, units) {
     validate.number(desiredWeight, 'desiredWeight')
     validate.number(barWeight, 'barWeight')
@@ -24,6 +25,12 @@ function calcPlates(desiredWeight, barWeight, weightsAvail, units) {
     let platesToRack = setRack(weights)
     let platesAvailable = addAvailablePlates(weights, weightsAvail)
     let amountLeft = desiredWeight - barWeight
+
+    let checkWeight = hasEnoughPlates(platesAvailable, amountLeft)
+
+    if (!checkWeight) {
+        throw new Error('You have not enough plates available')
+    }
 
     while (amountLeft > 0) {
         let found = false
@@ -42,8 +49,6 @@ function calcPlates(desiredWeight, barWeight, weightsAvail, units) {
             break
         }
     }
-    // console.log('Plates to Rack: ', platesToRack)
-    // console.log('Plates left: ', platesAvailable)
 
     return platesToRack
 
@@ -53,11 +58,12 @@ module.exports = function (desiredWeight, barWeight, weightsAvail, units) {
     return (async () => {
 
         const arr = []
-        const mapToArr = (value, key, map) => arr[arr.length] = [key, value]
+        const mapToArr = (value, key) => arr[arr.length] = [key, value]
 
         const result = await calcPlates(desiredWeight, barWeight, weightsAvail, units)
         result.forEach(mapToArr)
-        return arr
+        const response = filterArr(arr)
+        return response
     })()
 }
 
