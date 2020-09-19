@@ -11,15 +11,27 @@ const barPounds = [33, 44]
 export default function () {
     const [massUnit, setMassUnit] = useState(kilos)
     const [data, setData] = useState()
+    const [error, setError] = useState()
 
     let unit = massUnit[0] === 25 ? 'kilos' : 'pounds'
     let barWeight = unit === 'kilos' ? barKilos : barPounds
 
+    function setToNull() {
+        setData(null)
+        setError(null)
+    }
+
     function MassUnitButton() {
         return (
             <>
-                <button onClick={() => setMassUnit(kilos)}>Kilos</button>
-                <button onClick={() => setMassUnit(pounds)}>Pounds</button>
+                <button onClick={() => {
+                    setMassUnit(kilos)
+                    setToNull()
+                }}>Kilos</button>
+                <button onClick={() => {
+                    setMassUnit(pounds)
+                    setToNull()
+                }}>Pounds</button>
             </>
         )
     }
@@ -30,9 +42,12 @@ export default function () {
             setData(weightsToRack.result)
             console.log('Response arrived: ', weightsToRack.result)
         } catch ({ message }) {
+            setError(message)
             console.log(message)
         }
     }
+
+
 
     const inputWeightAmount = (amount) => {
         let arr = []
@@ -71,9 +86,16 @@ export default function () {
                 </div>
                 <button className="bttn">Calculate</button>
             </form>
-            {data && <>
-                <div className="data-container">{data}</div>
-            </>}
+            {data && <ul>
+                {data.map(value => {
+                    return (
+                        <li>
+                            <p>{value[0]} X {value[1]}</p>
+                        </li>
+                    )
+                })}
+            </ul>}
+            {error && <p>{error}</p>}
         </div>
 
     )
