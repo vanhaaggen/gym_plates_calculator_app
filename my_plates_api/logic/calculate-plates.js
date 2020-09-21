@@ -11,8 +11,8 @@ const validate = {
     }
 }
 
-const kilos = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1.25, 1]
-const pounds = [100, 55, 45, 35, 25, 10, 5, 2.5, 1.25]
+const kilos = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1, 0.5]
+const pounds = [55, 44, 33, 22, 11, 5.5, 4.4, 3.3, 2.2, 1.1]
 
 
 function calcPlates(desiredWeight, barWeight, weightsAvail, units) {
@@ -63,6 +63,7 @@ module.exports = function (desiredWeight, barWeight, weightsAvail, units) {
         const result = await calcPlates(desiredWeight, barWeight, weightsAvail, units)
         result.forEach(mapToArr)
         const response = filterArr(arr)
+
         return response
     })()
 }

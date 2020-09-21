@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import getAvailPlates from '../logic/getAvailPlates'
 import calcWeights from '../logic/calcWeights'
 import BarWeightInput from './BarWeightInput'
+import Result from './Result'
 
-const kilos = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1.25, 1]
-const pounds = [100, 55, 45, 35, 25, 10, 5, 2.5, 1.25]
+const kilos = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1, 0.5]
+const pounds = [55, 44, 33, 22, 11, 5.5, 4.4, 3.3, 2.2, 1.1]
 const barKilos = [15, 20]
 const barPounds = [33, 44]
 
@@ -47,8 +48,6 @@ export default function () {
         }
     }
 
-
-
     const inputWeightAmount = (amount) => {
         let arr = []
         for (let i = 0; i <= amount; i++) {
@@ -57,13 +56,14 @@ export default function () {
         return arr
     }
 
+
     return (
         <div className="container">
             <MassUnitButton />
             <p>{unit}</p>
             <form className="form" onSubmit={event => {
                 event.preventDefault()
-
+                setToNull()
                 const { target: { targetWeight: { value: targetWeight }, barWeight: { value: barWeight }, weight } } = event
                 const availPlates = getAvailPlates(weight)
                 console.log(availPlates)
@@ -86,15 +86,7 @@ export default function () {
                 </div>
                 <button className="bttn">Calculate</button>
             </form>
-            {data && <ul>
-                {data.map(value => {
-                    return (
-                        <li>
-                            <p>{value[0]} X {value[1]}</p>
-                        </li>
-                    )
-                })}
-            </ul>}
+            {data && <Result plates={data} />}
             {error && <p>{error}</p>}
         </div>
 
