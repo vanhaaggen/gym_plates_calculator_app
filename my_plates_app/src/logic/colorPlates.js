@@ -24,8 +24,8 @@ const colorPlates = {
 
 
 export default function (value) {
-    let getKilosIndex = kilos.indexOf(parseInt(value))
-    let getPoundsIndex = pounds.indexOf(parseInt(value))
+    let getKilosIndex = kilos.indexOf(value * 1)
+    let getPoundsIndex = pounds.indexOf(value * 1)
     if (getKilosIndex !== -1) {
         return colorPlates[getKilosIndex]
     } else if (getPoundsIndex !== -1) {

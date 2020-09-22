@@ -3,6 +3,7 @@ import getAvailPlates from '../logic/getAvailPlates'
 import calcWeights from '../logic/calcWeights'
 import BarWeightInput from './BarWeightInput'
 import Result from './Result'
+import './OptionFields.sass'
 
 const kilos = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1, 0.5]
 const pounds = [55, 44, 33, 22, 11, 5.5, 4.4, 3.3, 2.2, 1.1]
@@ -58,7 +59,7 @@ export default function () {
 
 
     return (
-        <div className="container">
+        <div className="">
             <MassUnitButton />
             <p>{unit}</p>
             <form className="form" onSubmit={event => {
@@ -72,11 +73,11 @@ export default function () {
             }>
                 <BarWeightInput bWeight={barWeight} />
                 <h3>Available Plates</h3>
-                <div className="">
+                <div className="w-select-cont">
                     {massUnit.map((weight, index) => {
                         return <>
-                            <div className="" key={`w-${index}`}>
-                                <label className="" htmlFor={`weight${weight}`}>{weight}</label>
+                            <div className="w-select-cont__group" key={`w-${index}`}>
+                                <label className="w-select-cont__group--label" htmlFor={`weight${weight}`}>{weight}</label>
                                 <select name="weight" id="weight">
                                     {inputWeightAmount(20)}
                                 </select>

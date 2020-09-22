@@ -12,9 +12,9 @@ export default function ({ plates }) {
                 {plates.map((value, i) => {
                     return (
                         <li key={`plates-li-${i}`}>
-                            <p className="result-container__ul--txt"
+                            <p className="result-cont__ul--txt"
                                 style={{
-                                    borderLeft: `2px solid ${getPlatesColor(value[0])}`
+                                    borderLeft: `10px solid ${getPlatesColor(value[0])}`
                                 }}>{value[0]} X {value[1]}</p>
                         </li>
                     )

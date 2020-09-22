@@ -1,7 +1,22 @@
+$red: #ef233c
+$blue: #0077ee
+$yellow: #ffd500
+$green: #80b918
+$white: #f3eff5
+       
+#gatsby-focus-wrapper, #___gatsby
+    display: flex
+    justify-content: center
+    height: 100%
+    width: 100%
+
 body
+    display: flex
+    justify-content: center
     font-family: 'Open Sans'
     width: 100%
     margin: 0
+    padding-left: .5rem
     box-sizing: border-box
 
 h1,h2,h3
@@ -14,12 +29,47 @@ button
     padding: .3rem .8rem
     margin: .5rem
     text-decoration: none
-    background: #0069ed
+    background: #0079ea
     color: #ffffff
     font-size: 1rem
     cursor: pointer
     border-radius: 5px
     text-align: center
-    transition: background 250ms ease-in-out, transform 150ms ease
+    transition: background 250ms ease-in-out
     -webkit-appearance: none
     -moz-appearance: none
+
+button:hover
+    background: #0069ed
+
+.main-container
+    width: 100%
+    padding-left: .3rem
+    
+.title-cont
+    display: flex
+    align-items: center   
+    height: auto
+    &__plates
+        display: flex
+        justify-content: space-around
+        width: 70px
+        height: 63px 
+        margin-right: .2rem   
+        &--piece
+            width: .7rem
+            height: 100%
+            border-radius: 2px
+    &__h1-title
+        display: flex
+        flex-direction: column
+        &--first
+            color: #545353
+        &--second
+            color: #545353
+
+
+
+@media only screen and (min-width: 1000px)
+    .main-container
+        width: 50%
