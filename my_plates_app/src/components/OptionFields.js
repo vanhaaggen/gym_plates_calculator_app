@@ -23,17 +23,32 @@ export default function () {
         setError(null)
     }
 
+
+    function isButtonActive(strg) {
+        if (unit === strg) {
+            return {
+                background: '#545353',
+                color: '#f3eff5',
+                border: '1px solid #545353'
+            }
+        }
+    }
+
     function MassUnitButton() {
         return (
             <>
-                <button onClick={() => {
-                    setMassUnit(kilos)
-                    setToNull()
-                }}>Kilos</button>
-                <button onClick={() => {
-                    setMassUnit(pounds)
-                    setToNull()
-                }}>Pounds</button>
+                <button className="unit-button"
+                    style={isButtonActive('kilos')}
+                    onClick={() => {
+                        setMassUnit(kilos)
+                        setToNull()
+                    }}>Kg</button>
+                <button className="unit-button"
+                    style={isButtonActive('pounds')}
+                    onClick={() => {
+                        setMassUnit(pounds)
+                        setToNull()
+                    }}>Lbs</button>
             </>
         )
     }
@@ -60,8 +75,9 @@ export default function () {
 
     return (
         <div className="">
+            <p>Mass unit</p>
             <MassUnitButton />
-            <p>{unit}</p>
+
             <form className="form" onSubmit={event => {
                 event.preventDefault()
                 setToNull()
