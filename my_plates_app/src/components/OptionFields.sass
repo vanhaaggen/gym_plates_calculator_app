@@ -2,7 +2,7 @@
     width: 100px
     height: 30px
     margin: 0 1.5rem 1.5rem 0
-    background: #f3eff5
+    background: #e2e2e2
     color: #545353
     border: 1px solid #545353
     font-weight: bold
@@ -11,13 +11,49 @@
     display: flex
     flex-wrap: wrap
     width: 100%
-    background: #0069ed
     &__group
-        margin: 1rem
+        display: flex
+        justify-content: space-between
+        align-items: center
+        //border: 1px solid red
+        width: 90px
+        margin: 1rem 1.5rem
         &--label
-            margin: 0 .5rem
-            color: white
+            padding: 0
+            font-size: 1.4rem
+        &--select
+            padding: 0 0.2rem
+            font-size: 1rem
+            border: 1px solid #545353
+            border-radius: 3px
+            width: 50px
+            height: 25px
             
+            
+.bttn-cont
+    display: flex
+    justify-content: center
+    width: 100%
+    &__calc-bttn
+        width: 90%
+        height: 50px
+        padding: .5rem
+        margin: 1rem 0 .5rem 0
+        color: white
+        background: #0077ee
+        font-size: 1.5rem
 
+.error-cont
+    display: flex
+    justify-content: center
+    width: 100%
+    &__message
+        width: 88%
+        text-align: center
+        padding: .2rem
+        border: 2px solid #ef233c
+        border-radius: 3px
+        background: #e2e2e2
+        font-weight: 600
 
 

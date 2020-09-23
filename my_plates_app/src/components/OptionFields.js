@@ -28,7 +28,7 @@ export default function () {
         if (unit === strg) {
             return {
                 background: '#545353',
-                color: '#f3eff5',
+                color: '#e2e2e2',
                 border: '1px solid #545353'
             }
         }
@@ -74,7 +74,7 @@ export default function () {
 
 
     return (
-        <div className="">
+        <>
             <p>Mass unit</p>
             <MassUnitButton />
 
@@ -94,18 +94,23 @@ export default function () {
                         return <>
                             <div className="w-select-cont__group" key={`w-${index}`}>
                                 <label className="w-select-cont__group--label" htmlFor={`weight${weight}`}>{weight}</label>
-                                <select name="weight" id="weight">
+                                <select className="w-select-cont__group--select" name="weight">
                                     {inputWeightAmount(20)}
                                 </select>
                             </div>
                         </>
                     })}
                 </div>
-                <button className="bttn">Calculate</button>
+                <div className="bttn-cont">
+                    <button className="bttn-cont__calc-bttn">Calculate</button>
+                </div>
+
             </form>
             {data && <Result plates={data} />}
-            {error && <p>{error}</p>}
-        </div>
+            {error && <div className="error-cont">
+                <p className="error-cont__message">❗{error}</p>
+            </div>}
+        </>
 
     )
 
