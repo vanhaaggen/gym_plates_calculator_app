@@ -13,9 +13,7 @@ body
     display: flex
     justify-content: center
     font-family: 'Open Sans'
-    width: 100%
     margin: 0
-    padding-left: .5rem
     box-sizing: border-box
 
 h1,h2,h3
@@ -35,9 +33,16 @@ button
     -webkit-appearance: none
     -moz-appearance: none
 
+select, input
+    -moz-appearance: none
+    -webkit-appearance: none
+    appearance: none
+    border: none
+    background: white
+
 .main-container
-    width: 100%
-    padding-left: .3rem
+    width: 95%
+    
     
 .title-cont
     display: flex
@@ -65,5 +70,5 @@ button
 
 @media only screen and (min-width: 1000px)
     .main-container
-        width: 50%
+        width: 30%
 
