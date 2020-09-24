@@ -2,11 +2,11 @@ const kilos = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1, 0.5]
 const pounds = [55, 44, 33, 22, 11, 5.5, 4.4, 3.3, 2.2, 1.1]
 
 const colors = {
-    red: '#fc4646',
-    blue: '#3861c9',
-    yellow: '#fcd251',
-    green: '#37c63e',
-    white: '#ffffff',
+    red: 'rgba(239, 35, 60, 1)',
+    blue: 'rgba(56, 97, 201, 1)',
+    yellow: 'rgba(252, 210, 81, 1)',
+    green: 'rgba(55, 198, 62, 1)',
+    white: 'rgba(255, 255, 255, 1)',
 }
 
 const colorPlates = {
