@@ -13,6 +13,7 @@ const barPounds = [33, 44]
 export default function () {
     const [massUnit, setMassUnit] = useState(kilos)
     const [data, setData] = useState()
+    const [showResult, setShowResult] = useState(true)
     const [error, setError] = useState()
 
     let unit = massUnit[0] === 25 ? 'kilos' : 'pounds'
@@ -72,6 +73,9 @@ export default function () {
         return arr
     }
 
+    const handleOnClick = () => {
+        setShowResult(!showResult)
+    }
 
     return (
         <>

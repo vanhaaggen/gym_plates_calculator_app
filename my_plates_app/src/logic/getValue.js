@@ -1,6 +1,6 @@
 
 /**
- * Transforms 2D array into 1D
+ * Separates weight and amount from an 2D into an 1D array
  * @param {Array} array
  * @param {Number} arrayPosition 
  * @return {Array} one dimensional array

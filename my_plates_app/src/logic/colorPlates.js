@@ -6,7 +6,7 @@ const colors = {
     blue: 'rgba(56, 97, 201, 1)',
     yellow: 'rgba(252, 210, 81, 1)',
     green: 'rgba(55, 198, 62, 1)',
-    white: 'rgba(255, 255, 255, 1)',
+    white: 'rgba(243, 239, 245, 1)',
 }
 
 const colorPlates = {
@@ -22,15 +22,26 @@ const colorPlates = {
     9: colors.white,
 }
 
-
+/**
+ * Gets color depending on value
+ * @param {Array} value 
+ * 
+ * @returns {Array} Array of rgba strings
+ */
 export default function (value) {
-    let getKilosIndex = kilos.indexOf(value * 1)
-    let getPoundsIndex = pounds.indexOf(value * 1)
-    if (getKilosIndex !== -1) {
-        return colorPlates[getKilosIndex]
-    } else if (getPoundsIndex !== -1) {
-        return colorPlates[getPoundsIndex]
-    } else {
-        return
+    const result = []
+    for (let i = 0; i < value.length; i++) {
+        let getKilosIndex = kilos.indexOf(value[i])
+        let getPoundsIndex = pounds.indexOf(value[i])
+
+        if (getKilosIndex !== -1) {
+            result.push(colorPlates[getKilosIndex])
+        } else if (getPoundsIndex !== -1) {
+            result.push(colorPlates[getPoundsIndex])
+        } else {
+            return
+        }
+
     }
+    return result
 }

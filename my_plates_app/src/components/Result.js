@@ -1,34 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import { Doughnut } from 'react-chartjs-2'
-import getPlatesColor from '../logic/colorPlates'
+import getColorPlates from '../logic/colorPlates'
 import getValues from '../logic/getValue'
+import "chartjs-plugin-datalabels"
 import './Result.sass'
 
 export default function ({ plates }) {
     const [chartData, setChartData] = useState({})
 
-
-
-    const chart = () => {
-        setChartData({
-            labels: getValues(plates, 0),
-            datasets: [
-                {
-                    label: 'Weights to Rack',
-                    data: getValues(plates, 1),
-                    backgroundColor: [
-                        'rgba(239, 35, 60, 1)',
-                        'rgba(56, 97, 201, 1)',
-                        'rgba(252, 210, 81, 1)',
-                        'rgba(55, 198, 62, 1)'
-                    ]
-                }
-            ],
-        })
-
-    }
-
     useEffect(() => {
+        const chart = () => {
+            setChartData({
+                labels: getValues(plates, 0),
+                datasets: [
+                    {
+                        label: 'Weights to Rack',
+                        data: getValues(plates, 1),
+                        backgroundColor: getColorPlates(getValues(plates, 0))
+                    }
+                ],
+            })
+
+        }
         chart()
     }, [])
 
@@ -36,7 +29,24 @@ export default function ({ plates }) {
         <div className="result-cont">
             <Doughnut data={chartData} options={{
                 rotation: 1 * Math.PI,
-                circumference: 1 * Math.PI
+                circumference: 1 * Math.PI,
+                tooltips: {
+                    enabled: false
+                },
+                plugins: {
+                    datalabels: {
+                        color: '#111',
+                        textAlign: 'center',
+                        font: {
+                            lineHeight: 1.6
+                        },
+                        formatter: (value, ctx) => {
+                            return `${ctx.chart.data.labels[ctx.dataIndex]} X ${value}`
+                        }
+                    }
+                }
+
+
             }} />
         </div>
     )
