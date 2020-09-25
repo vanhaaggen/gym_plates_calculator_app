@@ -7,6 +7,7 @@ import './Result.sass'
 
 export default function ({ plates }) {
     const [chartData, setChartData] = useState({})
+    const [chartPlugins, setChartPlugins] = useState({})
 
     useEffect(() => {
         const chart = () => {
@@ -25,9 +26,9 @@ export default function ({ plates }) {
         chart()
     }, [])
 
-    return (
-        <div className="result-cont">
-            <Doughnut data={chartData} options={{
+    useEffect(() => {
+        const plugins = () => {
+            setChartPlugins({
                 rotation: 1 * Math.PI,
                 circumference: 1 * Math.PI,
                 tooltips: {
@@ -46,8 +47,15 @@ export default function ({ plates }) {
                     }
                 }
 
+            })
 
-            }} />
+        }
+        plugins()
+    }, [])
+
+    return (
+        <div className="result-cont">
+            <Doughnut data={chartData} options={chartPlugins} />
         </div>
     )
 }
