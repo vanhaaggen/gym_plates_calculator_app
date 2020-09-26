@@ -31,16 +31,38 @@ export default function ({ plates }) {
             setChartPlugins({
                 rotation: 1 * Math.PI,
                 circumference: 1 * Math.PI,
+                title: {
+                    display: true,
+                    text: 'Weights to Rack',
+                    fontSize: 20,
+                    fontColor: '#545353'
+                },
+                legend: {
+                    display: false
+                },
                 tooltips: {
                     enabled: false
                 },
                 plugins: {
                     datalabels: {
-                        color: '#111',
+                        textStrokeColor: '#ffffff',
                         textAlign: 'center',
+                        padding: 0,
+                        borderRadius: 3,
                         font: {
-                            lineHeight: 1.6
+                            lineHeight: 1.6,
+                            weight: 'bold',
+                            size: 16
                         },
+                        color: (ctx) => {
+                            const index = ctx.dataIndex
+                            if (index === 2 || index === 7 || index === 4 || index === 9) {
+                                return '#545353'
+                            } else {
+                                return '#ffffff'
+                            }
+                        },
+
                         formatter: (value, ctx) => {
                             return `${ctx.chart.data.labels[ctx.dataIndex]} X ${value}`
                         }
@@ -55,18 +77,9 @@ export default function ({ plates }) {
 
     return (
         <div className="result-cont">
-            <Doughnut data={chartData} options={chartPlugins} />
+            <Doughnut
+                data={chartData}
+                options={chartPlugins} />
         </div>
     )
 }
-
-/*{plates.map((value, i) => {
-                    return (
-                        <li key={`plates-li-${i}`}>
-                            <p className="result-cont__ul--txt"
-                                style={{
-                                    borderLeft: `10px solid ${getPlatesColor(value[0])}`
-                                }}>{value[0]} X {value[1]}</p>
-                        </li>
-                    )
-                })} */
