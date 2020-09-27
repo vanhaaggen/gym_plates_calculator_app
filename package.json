@@ -1,7 +1,7 @@
 {
   "name": "barbell-racking-calculator",
   "private": true,
-  "description": "A simplified bare-bones starter for Gatsby",
+  "description": "Easy to use Barbell Racking Calculator",
   "version": "0.1.0",
   "license": "0BSD",
   "scripts": {

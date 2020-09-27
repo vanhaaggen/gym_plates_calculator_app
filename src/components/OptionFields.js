@@ -100,6 +100,9 @@ export default function () {
             }
             }>
                 <BarWeightInput bWeight={barWeight} />
+                {error && <div className="error-cont">
+                    <p className="error-cont__message"><span role="img" aria-label="exclamation">❗</span>{error}</p>
+                </div>}
                 <div className="reveals-main">
                     {transitions.map(({ item, key, props }) =>
                         item
@@ -136,9 +139,6 @@ export default function () {
                 </div>
             </form>
 
-            {error && <div className="error-cont">
-                <p className="error-cont__message"><span role="img" aria-label="exclamation">❗</span>{error}</p>
-            </div>}
         </>
 
     )
