@@ -31,7 +31,8 @@ function calcWeights(desiredWeight, barWeight, weightsAvail, units) {
             //mode: 'no-cors',
             headers: {
                 'Content-Type': 'text/JSON',
-                'Access-Control-Request-Method': 'GET'
+                'Access-Control-Request-Method': 'GET',
+                'Access-Control-Allow-Origin': 'https://5f707f5429ed4d000785f93f--mystifying-galileo-73413d.netlify.app'
             }
         })
 
