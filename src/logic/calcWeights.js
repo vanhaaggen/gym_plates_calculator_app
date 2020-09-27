@@ -1,4 +1,4 @@
-//const URL = 'https://whispering-river-40522.herokuapp.com/api'
+const URL = 'https://whispering-river-40522.herokuapp.com/api'
 const URL = 'http://localhost:8080/api'
 const querystring = require('querystring')
 
