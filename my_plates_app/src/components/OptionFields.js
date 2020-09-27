@@ -65,6 +65,7 @@ export default function () {
     const handleCalcWeights = async (desiredWeight, barWeight, weightsAvail, unit) => {
         try {
             const weightsToRack = await calcWeights(desiredWeight, barWeight, weightsAvail, unit)
+            console.log(weightsToRack)
             weightsToRack && resetAll()
             setData(weightsToRack.result)
 
