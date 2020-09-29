@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTransition, animated } from 'react-spring'
+import wakeupDyno from '../logic/wake-up-dyno'
 import getAvailPlates from '../logic/getAvailPlates'
 import calcWeights from '../logic/calcWeights'
 import BarWeightInput from './BarWeightInput'
@@ -26,6 +27,17 @@ export default function () {
         leave: { height: 0, opacity: 0 },
     })
 
+    useEffect(() => {
+        async function wakeup() {
+            try {
+                const response = await wakeupDyno()
+                console.log(response)
+            } catch ({ error }) {
+                console.log(error)
+            }
+        }
+        wakeup()
+    }, [])
 
     function resetAll(togl) {
         setData(null)
@@ -61,6 +73,7 @@ export default function () {
             </>
         )
     }
+
 
     const handleCalcWeights = async (desiredWeight, barWeight, weightsAvail, unit) => {
         try {
@@ -100,9 +113,6 @@ export default function () {
             }
             }>
                 <BarWeightInput bWeight={barWeight} />
-                {error && <div className="error-cont">
-                    <p className="error-cont__message"><span role="img" aria-label="exclamation">❗</span>{error}</p>
-                </div>}
                 <div className="reveals-main">
                     {transitions.map(({ item, key, props }) =>
                         item
@@ -122,6 +132,9 @@ export default function () {
                                     })}
                                 </div>
 
+                                {error && <div className="error-cont">
+                                    <p className="error-cont__message">{error}</p>
+                                </div>}
                                 <div className="bttn-cont">
                                     <button className="bttn-cont__calc-bttn">Calculate</button>
                                 </div>
