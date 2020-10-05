@@ -1,0 +1,22 @@
+=box-shadow($prop)
+    -webkit-box-shadow: $prop 
+    -moz-box-shadow: $prop 
+    box-shadow: $prop 
+
+.result-label-cont
+    width: 5rem
+    margin-right: 1rem
+    padding: .2rem .5rem
+    border-radius: 3px
+    +box-shadow(1px 1px 5px -1px rgba(0,0,0,0.4))
+
+    &__text
+        display: flex
+        justify-content: space-between
+        align-items: center
+       
+
+.inner-label
+    padding: .2rem
+    border-radius: 3px
+
