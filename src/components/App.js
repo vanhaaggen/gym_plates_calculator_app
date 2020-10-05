@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useTransition, animated } from 'react-spring'
-import wakeupDyno from '../logic/wake-up-dyno'
-import getAvailPlates from '../logic/getAvailPlates'
-import calcWeights from '../logic/calcWeights'
+import wakeupDyno from '../helpers/wake-up-dyno'
+import getAvailPlates from '../helpers/getAvailPlates'
+import calcWeights from '../helpers/calcWeights'
 import BarWeightInput from './BarWeightInput'
 import Result from './Result'
-import './OptionFields.sass'
+import '../styles/App.sass'
 
 const kilos = [25, 20, 15, 10, 5, 2.5, 2, 1.5, 1, 0.5]
 const pounds = [55, 44, 33, 22, 11, 5.5, 4.4, 3.3, 2.2, 1.1]
@@ -14,18 +13,12 @@ const barPounds = [33, 44]
 
 export default function () {
     const [massUnit, setMassUnit] = useState(kilos)
-    const [data, setData] = useState({})
+    const [data, setData] = useState()
     const [error, setError] = useState()
-    const [toogle, setToogle] = useState(true)
+    const [toogle, setToogle] = useState(false)
 
     let unit = massUnit[0] === 25 ? 'kilos' : 'pounds'
     let barWeight = unit === 'kilos' ? barKilos : barPounds
-
-    const transitions = useTransition(toogle, null, {
-        from: { overflow: 'hidden', height: 0, opacity: 0 },
-        enter: { height: 450, opacity: 1 },
-        leave: { height: 0, opacity: 0 },
-    })
 
     useEffect(() => {
         async function wakeup() {
@@ -39,10 +32,9 @@ export default function () {
         wakeup()
     }, [])
 
-    function resetAll(togl) {
+    function resetAll() {
         setData(null)
         setError(null)
-        setToogle(togl || !toogle)
     }
 
     function isButtonActive(strg) {
@@ -62,13 +54,13 @@ export default function () {
                     style={isButtonActive('kilos')}
                     onClick={() => {
                         setMassUnit(kilos)
-                        resetAll(true)
+                        resetAll()
                     }}>Kg</button>
                 <button className="unit-button"
                     style={isButtonActive('pounds')}
                     onClick={() => {
                         setMassUnit(pounds)
-                        resetAll(true)
+                        resetAll()
                     }}>Lbs</button>
             </>
         )
@@ -106,6 +98,7 @@ export default function () {
             </div>
             <form className="form" onSubmit={event => {
                 event.preventDefault()
+                setToogle(true)
                 const { target: { targetWeight: { value: targetWeight }, barWeight: { value: barWeight }, weight } } = event
                 const availPlates = getAvailPlates(weight)
                 console.log(availPlates)
@@ -114,41 +107,44 @@ export default function () {
             }>
                 <BarWeightInput bWeight={barWeight} />
                 <div className="reveals-main">
-                    {transitions.map(({ item, key, props }) =>
-                        item
-                            ?
-                            <animated.div key={key} style={props}>
-                                <h3>Available Plates</h3>
-                                <div className="w-select-cont">
-                                    {massUnit.map((weight, index) => {
-                                        return <>
-                                            <div className="w-select-cont__group" key={`w-${index}`}>
-                                                <label className="w-select-cont__group--label" htmlFor={`weight${weight}`}>{weight}</label>
-                                                <select className="w-select-cont__group--select" name="weight">
-                                                    {inputWeightAmount(20)}
-                                                </select>
-                                            </div>
-                                        </>
-                                    })}
-                                </div>
 
-                                {error && <div className="error-cont">
-                                    <p className="error-cont__message">{error}</p>
-                                </div>}
-                                <div className="bttn-cont">
-                                    <button className="bttn-cont__calc-bttn">Calculate</button>
-                                </div>
-                            </animated.div>
-
-                            : <animated.div key={key} style={props}>
-                                {data && <>
-                                    <Result plates={data} />
-                                    <div className="bttn-cont">
-                                        <button className="bttn-cont__calc-bttn" onClick={() => resetAll(true)}>New Calculation</button>
+                    {!data && <>
+                        <h3>Available Plates</h3>
+                        <div className="w-select-cont">
+                            {massUnit.map((weight, index) => {
+                                return <>
+                                    <div className="w-select-cont__group" key={`w-${index}`}>
+                                        <label className="w-select-cont__group--label" htmlFor={`weight${weight}`}>{weight}</label>
+                                        <select className="w-select-cont__group--select" name="weight">
+                                            {inputWeightAmount(20)}
+                                        </select>
                                     </div>
-                                </>}
-                            </animated.div>
-                    )}
+                                </>
+                            })}
+                        </div>
+                        {error && <div className="error-cont">
+                            <p className="error-cont__message">{error}</p>
+                        </div>
+                        }
+
+                        <div className="bttn-cont">
+                            <button className="bttn-cont__calc-bttn">Calculate</button>
+                        </div>
+                    </>
+                    }
+
+                    {data && <>
+                        <Result plates={data} toogle={toogle} />
+                        <div className="bttn-cont">
+                            <button className="bttn-cont__calc-bttn" onClick={() => {
+                                resetAll()
+                                setToogle(false)
+                            }}>New Calculation</button>
+                        </div>
+                    </>
+                    }
+
+
                 </div>
             </form>
 

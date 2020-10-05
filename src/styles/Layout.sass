@@ -1,0 +1,101 @@
+$red: #ef233c
+$blue: #0077ee
+$yellow: #ffd500
+$green: #80b918
+$white: #f3eff5
+
+=box-shadow($property)
+    -webkit-box-shadow: $property
+    -moz-box-shadow: $property
+    box-shadow: $property
+
+%box-focus
+    +box-shadow(0 0.3px 1px $blue)
+    outline: none
+    border: 1px solid $blue
+
+=appearance($prop)
+    -webkit-appearance: $prop
+    -moz-appearance: $prop
+    appearance: $prop
+
+#gatsby-focus-wrapper, #___gatsby
+    display: flex
+    justify-content: center
+    height: 100%
+    width: 100%
+body
+    display: flex
+    justify-content: center
+    font-family: 'Open Sans'
+    margin: 0
+    box-sizing: border-box
+
+h1,h2,h3
+    font-family: 'Roboto'
+
+ul
+    list-style-type: none
+
+a
+    text-decoration: none
+    color: #afafaf
+    cursor: pointer
+a:hover
+    color: #939292
+
+button
+    border: none
+    text-decoration: none
+    font-size: 1rem
+    cursor: pointer
+    border-radius: 2px
+    text-align: center
+    outline: none
+    +appearance(none)
+
+
+select, input
+    +appearance(none)
+    border: none
+    background: white
+
+input:focus
+   @extend %box-focus
+
+select:focus
+    @extend %box-focus
+
+.main-container
+    width: 95%
+    max-width: 500px
+    min-width: 250px
+
+
+.title-cont
+    display: flex
+    align-items: center
+    height: auto
+    &__plates
+        display: flex
+        justify-content: space-around
+        width: 70px
+        height: 63px
+        margin-right: .2rem
+        &--piece
+            width: .7rem
+            height: 100%
+            border-radius: 2px
+    &__h1-title
+        display: flex
+        flex-direction: column
+        &--first
+            color: #545353
+        &--second
+            color: #545353
+
+.signature-cont
+    &__text
+        font-size: .8rem
+        color: #afafaf
+
