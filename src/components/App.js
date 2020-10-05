@@ -134,7 +134,7 @@ export default function () {
                     }
 
                     {data && <>
-                        <Result plates={data} toogle={toogle} />
+                        <Result plates={data} toogle={toogle} unit={unit} />
                         <div className="bttn-cont">
                             <button className="bttn-cont__calc-bttn" onClick={() => {
                                 resetAll()

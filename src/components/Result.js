@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useTrail, animated } from 'react-spring'
-import getColorPlates from '../helpers/colorPlates'
-import getValues from '../helpers/getValue'
+import ResultLabel from './ResultLabel'
+import weightColor from '../helpers/colorPlates'
+import getWeightValue from '../helpers/getValue'
 import '../styles/Result.sass'
 
 const config = {
@@ -10,8 +11,8 @@ const config = {
   friction: 200
 }
 
-export default function ({ plates, toogle }) {
-  const [color, setColor] = useState()
+export default function ({ plates, toogle, unit }) {
+  const [color] = useState(weightColor(getWeightValue(plates, 0)))
 
   const trail = useTrail(plates.length, {
     config,
@@ -24,9 +25,7 @@ export default function ({ plates, toogle }) {
       height: 0,
     }
   })
-
-
-
+  console.log(color)
   return (
     <div className="result-cont">
 
@@ -35,7 +34,13 @@ export default function ({ plates, toogle }) {
           key={plates[index]}
           className="result-text"
           style={{ ...rest, transform: x.interpolate(x => `translate3d(0,${x}px,0)`) }}>
-          <animated.div style={{ height }}><p>{`${plates[index][0]} X ${plates[index][1]}`}</p></animated.div>
+          <animated.div style={{ height }}>
+            <ResultLabel
+              weight={plates[index][0]}
+              amount={plates[index][1]}
+              unit={unit}
+              color={color[index]} />
+          </animated.div>
         </animated.div>
 
       ))}
