@@ -1,5 +1,5 @@
 import React from 'react'
-import './Layout.sass'
+import '../styles/Layout.sass'
 
 export default function ({ children }) {
 

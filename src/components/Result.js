@@ -1,85 +1,45 @@
 import React, { useState, useEffect } from 'react'
-import { Doughnut } from 'react-chartjs-2'
-import getColorPlates from '../logic/colorPlates'
-import getValues from '../logic/getValue'
-import "chartjs-plugin-datalabels"
-import './Result.sass'
+import { useTrail, animated } from 'react-spring'
+import getColorPlates from '../helpers/colorPlates'
+import getValues from '../helpers/getValue'
+import '../styles/Result.sass'
 
-export default function ({ plates }) {
-    const [chartData, setChartData] = useState({})
-    const [chartPlugins, setChartPlugins] = useState({})
+const config = {
+  mass: 5,
+  tension: 2000,
+  friction: 200
+}
 
-    useEffect(() => {
-        const chart = () => {
-            setChartData({
-                labels: getValues(plates, 0),
-                datasets: [
-                    {
-                        label: 'Weights to Rack',
-                        data: getValues(plates, 1),
-                        backgroundColor: getColorPlates(getValues(plates, 0))
-                    }
-                ],
-            })
+export default function ({ plates, toogle }) {
+  const [color, setColor] = useState()
 
-        }
-        chart()
-    }, [])
+  const trail = useTrail(plates.length, {
+    config,
+    opacity: toogle ? 1 : 0,
+    x: toogle ? 0 : 20,
+    height: toogle ? 80 : 0,
+    from: {
+      opacity: 0,
+      x: 20,
+      height: 0,
+    }
+  })
 
-    useEffect(() => {
-        const plugins = () => {
-            setChartPlugins({
-                rotation: 1 * Math.PI,
-                circumference: 1 * Math.PI,
-                title: {
-                    display: true,
-                    text: 'Weights to Rack',
-                    fontSize: 20,
-                    fontColor: '#545353'
-                },
-                legend: {
-                    display: false
-                },
-                tooltips: {
-                    enabled: false
-                },
-                plugins: {
-                    datalabels: {
-                        textStrokeColor: '#ffffff',
-                        textAlign: 'center',
-                        padding: 0,
-                        borderRadius: 3,
-                        font: {
-                            lineHeight: 1.6,
-                            weight: 'bold',
-                            size: 16
-                        },
-                        color: (ctx) => {
-                            const index = ctx.dataIndex
-                            if (index === 2 || index === 7 || index === 4 || index === 9) {
-                                return '#545353'
-                            } else {
-                                return '#ffffff'
-                            }
-                        },
 
-                        formatter: (value, ctx) => {
-                            return `${ctx.chart.data.labels[ctx.dataIndex]} X ${value}`
-                        }
-                    }
-                }
 
-            })
+  return (
+    <div className="result-cont">
 
-        }
-        plugins()
-    }, [])
+      {trail.map(({ x, height, ...rest }, index) => (
+        <animated.div
+          key={plates[index]}
+          className="result-text"
+          style={{ ...rest, transform: x.interpolate(x => `translate3d(0,${x}px,0)`) }}>
+          <animated.div style={{ height }}><p>{`${plates[index][0]} X ${plates[index][1]}`}</p></animated.div>
+        </animated.div>
 
-    return (
-        <div className="result-cont">
-            <Doughnut
-                data={chartData}
-                options={chartPlugins} />
-        </div>
-    )
+      ))}
+
+    </div>
+  )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import './BarWeightInput.sass'
+import '../styles/BarWeightInput.sass'
 
 export default function ({ bWeight }) {
     return (
