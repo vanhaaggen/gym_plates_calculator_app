@@ -8,7 +8,7 @@ export default function (props) {
 
     const lableStyle = {
         background: `linear-gradient(to bottom right,transparent 50%,${color} 0) bottom right/30px 30px no-repeat,
-        #f8f8f8`,
+        #ffffff`,
         overflow: 'hidden'
     }
 
