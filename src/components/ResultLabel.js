@@ -7,12 +7,12 @@ export default function (props) {
     let abbrev = unit === 'kilos' ? 'Kg' : 'Lbs'
 
     const lableStyle = {
-        background: `linear-gradient(to bottom right,transparent 50%,${color} 0) bottom right/30px 30px no-repeat,
+        background: `linear-gradient(to bottom right,transparent 50%,${color} 0) bottom right/10px 10px no-repeat,
         #ffffff`,
+        border: `1px solid ${color}`,
         overflow: 'hidden'
     }
 
-    console.log(color)
     return (
         <div className="result-label-cont" style={lableStyle}>
             <div className="result-label-cont__text" >
