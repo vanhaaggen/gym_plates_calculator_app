@@ -1,5 +1,5 @@
-//const URL = "https://whispering-river-40522.herokuapp.com/api" //should be in .ENV file but this is just a test app
-const URL = "http://localhost:8080/api"
+const URL = "https://whispering-river-40522.herokuapp.com/api" //should be in .ENV file but this is just a test app
+//const URL = "http://localhost:8080/api"
 const querystring = require("query-string")
 
 const validate = {

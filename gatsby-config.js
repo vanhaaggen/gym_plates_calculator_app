@@ -14,29 +14,14 @@ module.exports = {
   },
 
   plugins: [
-    `gatsby-plugin-sass
-    gatsby-plugin-preload-fonts`,
+    `gatsby-plugin-sass`,
+    `gatsby-plugin-preload-fonts`,
     `gatsby-plugin-preload-fonts`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `pages`,
         path: `${__dirname}/src/pages/`,
-      },
-    },
-    {
-      resolve: `gatsby-plugin-preload-fonts`,
-      options: {
-        fonts: [
-          {
-            family: `Roboto`,
-            variants: [`400`, `700`],
-          },
-          {
-            family: `Open Sans`,
-            variant: [`300`, `400`],
-          },
-        ],
       },
     },
   ],
